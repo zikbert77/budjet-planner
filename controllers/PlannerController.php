@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\forms\PlannerCategoryForm;
+use app\models\forms\PlannerForm;
 use app\models\PlannerCategory;
 use app\models\UserPlanner;
 use Yii;
@@ -20,6 +21,20 @@ class PlannerController extends Controller
     public function actionWalletModal()
     {
         return $this->renderAjax('modals/_wallet');
+    }
+
+    public function actionNewPlannerModal()
+    {
+        $model = new PlannerForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                return $this->redirect(['/planner', 'id' => $model->plannerId]);
+            }
+        }
+
+        return $this->renderAjax('modals/_newPlanner', [
+            'model' => $model
+        ]);
     }
 
     public function actionNewPlannerCategoryModal($plannerId)

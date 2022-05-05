@@ -140,11 +140,14 @@ a.desc:after {
     background-color: rgba(212, 138, 1, 0.4);
     bottom: 0;
     width: 75px;
-    height: 50px;
 }
 
 .category-pic .left {
     color: white;
     font-weight: lighter;
     z-index: 99;
+}
+
+.category-percent, .category-amount {
+    font-size: 12px;
 }

@@ -30,7 +30,7 @@ $this->title = 'Planner';
 </div>
 <div class="container">
     <div class="row">
-       <div class="col">
+       <div class="col col-5">
            <h3><?= $planner->amount ?> грн.</h3>
            <small class="text-muted">$5000 ~ 30.0</small>
            <div>
@@ -41,7 +41,8 @@ $this->title = 'Planner';
                </div>
            </div>
        </div>
-        <div class="col">
+        <div class="col col-2"></div>
+        <div class="col col-5">
             <div class="text-center">
                 <span class="add-category">
                     + Додати категорію
@@ -51,19 +52,27 @@ $this->title = 'Planner';
                 <div class="row">
                     <?php
                         $i = 0;
+                        /** @var \app\models\PlannerCategory $category */
                         foreach ($planner->getCategories()->all() as $category):
                     ?>
-                        <div class="col">
+                        <div class="col" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title="
+                            <?= $category->title ?><br>
+                            Виділено: <?= $category->amount ?>₴ (<?= $category->percent ?>%)<br>
+                            Використано: <?= (int)$category->used_amount ?>₴<br>
+                            Доступно: <?= $category->getLeftAmount() ?>₴
+                        ">
                             <div class="category text-center">
                                 <div class="category-pic">
-                                    <span class="left">100$</span>
-                                    <div class="used"></div>
+                                    <span class="left small">
+                                        <?= $category->getLeftAmount() ?>
+                                    </span>
+                                    <div class="used" style="height: <?= 75 - round(($category->getLeftAmount() * 75) / $category->amount) ?>px;"></div>
                                 </div>
-                                <span class="title">
+                                <span class="title small">
                                     <?= $category->title ?>
                                 </span><br>
-                                <span class="category-percent small"><?= $category->percent ?>%</span>
-                                <span class="category-amount small"> | <?= $category->amount ?></span>
+                                <span class="category-percent text-muted"><?= $category->percent ?>%</span>
+                                <span class="category-amount text-muted"> | <?= $category->amount ?>₴</span>
                             </div>
                         </div>
                         <?php if ($i % 4 == 0 && $i > 0): ?>
@@ -86,6 +95,11 @@ $this->title = 'Planner';
 
 <script>
     $(document).ready(function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
         buildChart();
         $('.add-category').click(function () {
             $.ajax({

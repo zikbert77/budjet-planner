@@ -64,4 +64,9 @@ class PlannerCategory extends \yii\db\ActiveRecord
     {
         return $this->hasOne(UserPlanner::class, ['id' => 'planner_id']);
     }
+
+    public function getLeftAmount(): float
+    {
+        return $this->amount - $this->used_amount;
+    }
 }

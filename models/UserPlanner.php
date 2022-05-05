@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%user_planner}}".
@@ -10,13 +11,14 @@ use Yii;
  * @property int $id
  * @property string $title
  * @property int $user_id
+ * @property int $currency
  * @property float|null $amount
  * @property float|null $used_amount
  * @property string|null $created_at
  *
  * @property User $user
  */
-class UserPlanner extends \yii\db\ActiveRecord
+class UserPlanner extends ActiveRecord
 {
     /**
      * {@inheritdoc}
