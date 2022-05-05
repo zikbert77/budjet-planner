@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\forms\PlannerCategoryForm;
+use app\models\PlannerCategory;
 use app\models\UserPlanner;
 use Yii;
 use yii\web\Controller;
@@ -34,5 +35,25 @@ class PlannerController extends Controller
         return $this->renderAjax('modals/_plannerCategory', [
             'model' => $model
         ]);
+    }
+
+    public function actionGetChartData($plannerId)
+    {
+        $data = [];
+        $planner = UserPlanner::findOne($plannerId);
+        /** @var PlannerCategory $category */
+        foreach ($planner->getCategories()->all() as $category) {
+            $data['labels'][] = $category->title;
+            $data['data'][] = $category->percent;
+            $data['colors'][] = 'orange';
+        }
+
+        if ($planner->getAvailableAmountPercent() > 0) {
+            $data['labels'][] = 'Не використано';
+            $data['data'][] = $planner->getAvailableAmountPercent();
+            $data['colors'][] = 'lightgray';
+        }
+
+        return json_encode($data);
     }
 }

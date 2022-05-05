@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $title
- * @property int|null $percent
+ * @property float|null $percent
  * @property float|null $amount
  * @property float|null $used_amount
  * @property int $planner_id
@@ -33,10 +33,10 @@ class PlannerCategory extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'planner_id'], 'required'],
-            [['percent', 'planner_id'], 'integer'],
-            [['amount', 'used_amount'], 'number'],
+            [['planner_id'], 'integer'],
+            [['percent', 'amount', 'used_amount'], 'number'],
             [['title'], 'string', 'max' => 255],
-            [['planner_id'], 'exist', 'skipOnError' => true, 'targetClass' => UserPlanner::className(), 'targetAttribute' => ['planner_id' => 'id']],
+            [['planner_id'], 'exist', 'skipOnError' => true, 'targetClass' => UserPlanner::class, 'targetAttribute' => ['planner_id' => 'id']],
         ];
     }
 

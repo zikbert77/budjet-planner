@@ -32,9 +32,21 @@ use yii\widgets\Pjax;
                     ]);
                 ?>
 
-                <?= $form->field($model, 'title')->textInput(['autofocus' => true]) ?>
-                <?= $form->field($model, 'percent')->textInput(['id' => 'percent']) ?>
-                <?= $form->field($model, 'amount')->textInput()->textInput(['id' => 'amount']) ?>
+                <?= $form
+                    ->field($model, 'title')
+                    ->textInput(['autofocus' => true])
+                    ->label('Назва')
+                ?>
+                <?= $form
+                    ->field($model, 'percent')
+                    ->textInput(['id' => 'percent'])
+                    ->label('Відсоток')
+                ?>
+                <?= $form
+                    ->field($model, 'amount')
+                    ->textInput(['id' => 'amount'])
+                    ->label('Сума')
+                ?>
                 <div class="form-group">
                     <?= Html::submitButton('Створити', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
                 </div>
@@ -61,20 +73,20 @@ use yii\widgets\Pjax;
         });
 
         function calculateAmountField(percent) {
-            let amount = (<?= (int)$model->getPlanner()->amount ?> * percent) / 100;
-            if (amount > <?= (int)$model->getPlanner()->getAvailableAmount() ?>) {
-                amount = <?= (int)$model->getPlanner()->getAvailableAmount() ?>;
-                $("#percent").val(<?= (int)$model->getPlanner()->getAvailableAmountPercent() ?>)
+            let amount = (<?= (float)$model->getPlanner()->amount ?> * percent) / 100;
+            if (amount > <?= (float)$model->getPlanner()->getAvailableAmount() ?>) {
+                amount = <?= (float)$model->getPlanner()->getAvailableAmount() ?>;
+                $("#percent").val(<?= (float)$model->getPlanner()->getAvailableAmountPercent() ?>)
             }
 
             $("#amount").val(amount)
         }
 
         function calculatePercentField(amount) {
-            let percent = (amount * 100) / <?= (int)$model->getPlanner()->amount ?>;
-            if (percent > <?= (int)$model->getPlanner()->getAvailableAmountPercent() ?>) {
-                percent = <?= (int)$model->getPlanner()->getAvailableAmountPercent() ?>;
-                $("#amount").val(<?= (int)$model->getPlanner()->getAvailableAmount() ?>)
+            let percent = (amount * 100) / <?= (float)$model->getPlanner()->amount ?>;
+            if (percent > <?= (float)$model->getPlanner()->getAvailableAmountPercent() ?>) {
+                percent = <?= (float)$model->getPlanner()->getAvailableAmountPercent() ?>;
+                $("#amount").val(<?= (float)$model->getPlanner()->getAvailableAmount() ?>)
             }
 
             $("#percent").val(percent)

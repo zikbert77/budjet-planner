@@ -118,6 +118,7 @@ a.desc:after {
 
 .category {
     cursor: pointer;
+    margin-top: 25px;
 }
 
 .category-pic {

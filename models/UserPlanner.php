@@ -63,7 +63,10 @@ class UserPlanner extends \yii\db\ActiveRecord
      */
     public function getCategories()
     {
-        return $this->hasMany(PlannerCategory::class, ['planner_id' => 'id']);
+        return $this
+            ->hasMany(PlannerCategory::class, ['planner_id' => 'id'])
+            ->orderBy(['percent' => SORT_DESC])
+        ;
     }
 
     /**
@@ -81,8 +84,8 @@ class UserPlanner extends \yii\db\ActiveRecord
         return $this->amount - $this->used_amount;
     }
 
-    public function getAvailableAmountPercent(): int
+    public function getAvailableAmountPercent(): float
     {
-        return round((($this->amount - $this->used_amount) * 100) / $this->amount);
+        return round((($this->amount - $this->used_amount) * 100) / $this->amount, 1);
     }
 }
