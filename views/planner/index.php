@@ -44,7 +44,7 @@ $this->title = 'Planner';
         <div class="col col-2"></div>
         <div class="col col-5">
             <div class="text-center">
-                <span class="add-category">
+                <span class="add-category custom-link">
                     + Додати категорію
                 </span>
             </div>
@@ -61,10 +61,10 @@ $this->title = 'Planner';
                             Використано: <?= (int)$category->used_amount ?>₴<br>
                             Доступно: <?= $category->getLeftAmount() ?>₴
                         ">
-                            <div class="category text-center">
+                            <div class="category text-center" data-id="<?= $category->id ?>">
                                 <div class="category-pic">
                                     <span class="left small">
-                                        <?= $category->getLeftAmount() ?>
+                                        <?= $category->used_amount ?? 0 ?>₴
                                     </span>
                                     <div class="used" style="height: <?= 75 - round(($category->getLeftAmount() * 75) / $category->amount) ?>px;"></div>
                                 </div>
@@ -88,7 +88,7 @@ $this->title = 'Planner';
     </div>
 </div>
 
-<div id="plannerCategoryModalWrapper"></div>
+<div id="modalWrapper"></div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script></body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -106,7 +106,7 @@ $this->title = 'Planner';
                 url: '<?= Url::toRoute(['/planner/new-planner-category-modal', 'plannerId' => $planner->id])?>',
                 data: {},
                 success: function (response) {
-                    $('#plannerCategoryModalWrapper').html(response)
+                    $('#modalWrapper').html(response)
                     let modal = new bootstrap.Modal($("#plannerCategoryModal"), {})
                     modal.toggle();
                 },
@@ -115,11 +115,11 @@ $this->title = 'Planner';
 
         $('.category').click(function () {
             $.ajax({
-                url: '<?= Url::toRoute(['/planner/planner-category-modal', 'plannerId' => $planner->id])?>',
+                url: '<?= Url::toRoute(['/planner/planner-category-actions'])?>?id=' + $(this).data('id'),
                 data: {},
                 success: function (response) {
-                    $('#plannerCategoryModalWrapper').html(response)
-                    let modal = new bootstrap.Modal($("#plannerCategoryModal"), {})
+                    $('#modalWrapper').html(response)
+                    let modal = new bootstrap.Modal($("#plannerCategoryActionsModal"), {})
                     modal.toggle();
                 },
             });

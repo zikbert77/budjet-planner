@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\forms\PlannerCategoryExpenseForm;
 use app\models\forms\PlannerCategoryForm;
 use app\models\forms\PlannerForm;
 use app\models\PlannerCategory;
@@ -49,6 +50,33 @@ class PlannerController extends Controller
 
         return $this->renderAjax('modals/_plannerCategory', [
             'model' => $model
+        ]);
+    }
+
+    public function actionPlannerCategoryExpense($categoryId)
+    {
+        $category = PlannerCategory::findOne($categoryId);
+        $planner = $category->getPlanner()->one();
+
+        $model = new PlannerCategoryExpenseForm();
+        $model->setCategory($categoryId);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                return $this->redirect(['/planner', 'id' => $planner->id]);
+            }
+        }
+
+        return $this->renderAjax('modals/_plannerCategoryExpense', [
+            'category' => $category,
+            'planner' => $planner,
+            'model' => $model
+        ]);
+    }
+
+    public function actionPlannerCategoryActions($id)
+    {
+        return $this->renderAjax('modals/_plannerCategoryActions', [
+            'model' => PlannerCategory::findOne($id)
         ]);
     }
 

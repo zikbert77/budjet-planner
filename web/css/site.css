@@ -101,7 +101,7 @@ a.desc:after {
     cursor: pointer;
 }
 
-.add-category {
+.custom-link {
     transition: all .3s;
     cursor: pointer;
     display: inline-block;
@@ -112,7 +112,7 @@ a.desc:after {
     margin-bottom: 15px;
 }
 
-.add-category:hover {
+.custom-link:hover {
     background-color: rgba(122, 122, 122, 0.05);
 }
 
