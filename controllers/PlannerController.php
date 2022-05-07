@@ -53,6 +53,24 @@ class PlannerController extends Controller
         ]);
     }
 
+    public function actionPlannerCategoryModal($id)
+    {
+        $category = PlannerCategory::findOne($id);
+
+        $model = new PlannerCategoryForm();
+        $model->setAttributes($category->attributes);
+        $model->setCategory($category);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                return $this->redirect(['/planner', 'id' => $category->planner_id]);
+            }
+        }
+
+        return $this->renderAjax('modals/_plannerCategory', [
+            'model' => $model
+        ]);
+    }
+
     public function actionPlannerCategoryExpense($categoryId)
     {
         $category = PlannerCategory::findOne($categoryId);
@@ -82,19 +100,25 @@ class PlannerController extends Controller
 
     public function actionGetChartData($plannerId)
     {
+        $i = 0;
         $data = [];
         $planner = UserPlanner::findOne($plannerId);
         /** @var PlannerCategory $category */
         foreach ($planner->getCategories()->all() as $category) {
             $data['labels'][] = $category->title;
             $data['data'][] = $category->percent;
-            $data['colors'][] = 'orange';
+            $data['colors'][] = PlannerCategory::COLORS[$i];
+
+            $i++;
+            if ($i >= count(PlannerCategory::COLORS)) {
+                $i = 0;
+            }
         }
 
         if ($planner->getAvailableAmountPercent() > 0) {
             $data['labels'][] = 'Не використано';
             $data['data'][] = $planner->getAvailableAmountPercent();
-            $data['colors'][] = 'lightgray';
+            $data['colors'][] = '#c9cbcf';
         }
 
         return json_encode($data);

@@ -18,6 +18,15 @@ use Yii;
  */
 class PlannerCategory extends \yii\db\ActiveRecord
 {
+    const COLORS = [
+        '#ff9f40',
+        '#ffcd55',
+        '#36a2ec',
+        '#4bc0c0',
+        '#ff6384',
+        '#9966ff',
+    ];
+
     /**
      * {@inheritdoc}
      */

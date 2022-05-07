@@ -151,3 +151,13 @@ a.desc:after {
 .category-percent, .category-amount {
     font-size: 12px;
 }
+
+.expenses {
+    margin-top: 50px;
+}
+
+.edit-category {
+    padding-top: 2px;
+    color: #1e9fea;
+    cursor: pointer;
+}

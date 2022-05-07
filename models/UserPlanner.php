@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -72,6 +73,19 @@ class UserPlanner extends ActiveRecord
     }
 
     /**
+     * @return PlannerCategoryExpenses[]
+     */
+    public function getExpenses(): array
+    {
+        return $this
+            ->hasMany(PlannerCategoryExpenses::class, ['category_id' => 'id'])
+            ->via('categories')
+            ->orderBy(['created_at' => SORT_DESC])
+            ->all()
+        ;
+    }
+
+    /**
      * Gets query for [[User]].
      *
      * @return \yii\db\ActiveQuery
@@ -79,6 +93,18 @@ class UserPlanner extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function updateUsedAmount()
+    {
+        $amount = $this
+            ->getCategories()
+            ->select('SUM(amount)')
+            ->scalar()
+        ;
+        
+        $this->used_amount = $amount;
+        $this->save(false);
     }
 
     public function getAvailableAmount(): float

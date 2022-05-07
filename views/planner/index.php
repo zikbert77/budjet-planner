@@ -43,11 +43,15 @@ $this->title = 'Planner';
        </div>
         <div class="col col-2"></div>
         <div class="col col-5">
-            <div class="text-center">
-                <span class="add-category custom-link">
-                    + Додати категорію
-                </span>
+            <div class="row">
+                <div>
+                    <h3 class="float-left">Категорії</h3>
+                    <span class="add-category custom-link float-right">
+                        + Додати категорію
+                    </span>
+                </div>
             </div>
+            <div class="clear"></div>
             <div class="categories-box">
                 <div class="row">
                     <?php
@@ -64,7 +68,7 @@ $this->title = 'Planner';
                             <div class="category text-center" data-id="<?= $category->id ?>">
                                 <div class="category-pic">
                                     <span class="left small">
-                                        <?= $category->used_amount ?? 0 ?>₴
+                                        <?= $category->getLeftAmount() ?>₴
                                     </span>
                                     <div class="used" style="height: <?= 75 - round(($category->getLeftAmount() * 75) / $category->amount) ?>px;"></div>
                                 </div>
@@ -85,6 +89,32 @@ $this->title = 'Planner';
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="expenses">
+        <h3>Витрати</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Категорія</th>
+                    <th>Cума</th>
+                    <th>Опис</th>
+                    <th>Дата</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($planner->getExpenses() as $expense): ?>
+                    <tr>
+                        <td><?= $expense->id ?></td>
+                        <td><?= $expense->category->title ?></td>
+                        <td><?= $expense->amount ?></td>
+                        <td><?= empty($expense->description) ? '-' : $expense->description ?></td>
+                        <td><?= $expense->created_at ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -115,11 +145,11 @@ $this->title = 'Planner';
 
         $('.category').click(function () {
             $.ajax({
-                url: '<?= Url::toRoute(['/planner/planner-category-actions'])?>?id=' + $(this).data('id'),
+                url: '<?= Url::toRoute(['/planner/planner-category-expense'])?>?categoryId=' + $(this).data('id'),
                 data: {},
                 success: function (response) {
                     $('#modalWrapper').html(response)
-                    let modal = new bootstrap.Modal($("#plannerCategoryActionsModal"), {})
+                    let modal = new bootstrap.Modal($("#plannerCategoryExpenseModal"), {})
                     modal.toggle();
                 },
             });

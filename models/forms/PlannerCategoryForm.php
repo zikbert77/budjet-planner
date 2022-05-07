@@ -15,6 +15,9 @@ class PlannerCategoryForm extends Model
     /** @var UserPlanner */
     private $planner;
 
+    /** @var PlannerCategory|null */
+    private $category = null;
+
     /**
      * @inheritdoc
      */
@@ -31,7 +34,7 @@ class PlannerCategoryForm extends Model
 
     public function save(): bool
     {
-        $category = new PlannerCategory();
+        $category = $this->category ?? new PlannerCategory();
         $category->title = $this->title;
         $category->percent = $this->percent;
         $category->amount = $this->amount;
@@ -41,17 +44,16 @@ class PlannerCategoryForm extends Model
         }
 
         if ($category->save()) {
-            if (!empty($this->percent)) {
-                $usedAmount = ($this->planner->amount * $this->percent) / 100;
-            } else {
-                $usedAmount = $this->amount;
-            }
-
-            $this->planner->used_amount += $usedAmount;
-            $this->planner->save(false);
+            $this->planner->updateUsedAmount();
         }
 
         return true;
+    }
+
+    public function setCategory(PlannerCategory $category)
+    {
+        $this->category = $category;
+        $this->planner = $category->planner;
     }
 
     public function setPlanner($id)

@@ -39,16 +39,16 @@ use yii\widgets\Pjax;
                 ?>
                 <?= $form
                     ->field($model, 'percent')
-                    ->textInput(['id' => 'percent'])
+                    ->textInput(['id' => 'percent', 'type' => 'number'])
                     ->label('Відсоток')
                 ?>
                 <?= $form
                     ->field($model, 'amount')
-                    ->textInput(['id' => 'amount'])
+                    ->textInput(['id' => 'amount', 'type' => 'number'])
                     ->label('Сума')
                 ?>
                 <div class="form-group">
-                    <?= Html::submitButton('Створити', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                    <?= Html::submitButton('Зберегти', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
                 </div>
                 <?php
                     ActiveForm::end();
