@@ -31,8 +31,18 @@ $this->title = 'Planner';
 <div class="container">
     <div class="row">
        <div class="col col-5">
-           <h3><?= $planner->amount ?> грн.</h3>
-           <small class="text-muted">$5000 ~ 30.0</small>
+           <h3><?= $planner->title ?></h3>
+           <br>
+           <span class="d-block">
+               Бюджет: <span class="small text-muted"><?= $planner->amount ?>₴</span>
+           </span>
+           <span class="d-block">
+               Використано: <span class="small text-muted"><?= $planner->used_amount ?>₴ (<?= 100 - $planner->getAvailableAmountPercent() ?>%)</span>
+           </span>
+           <span class="d-block">
+               Доступно: <span class="small text-muted"><?= $planner->getAvailableAmount() ?>₴ (<?= $planner->getAvailableAmountPercent() ?>%)</span>
+           </span>
+           <br>
            <div>
                <div class="chart">
                    <div>

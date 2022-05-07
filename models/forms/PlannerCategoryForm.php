@@ -56,6 +56,11 @@ class PlannerCategoryForm extends Model
         $this->planner = $category->planner;
     }
 
+    public function getCategory(): ?PlannerCategory
+    {
+        return $this->category;
+    }
+
     public function setPlanner($id)
     {
         $this->planner = UserPlanner::findOne($id);

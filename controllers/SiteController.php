@@ -66,7 +66,10 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index', [
-            'planners' => UserPlanner::findAll(['user_id' => Yii::$app->user->id]),
+            'planners' => UserPlanner::find()
+                ->andWhere(['user_id' => Yii::$app->user->id])
+                ->orderBy(['id' => SORT_DESC])
+                ->all(),
         ]);
     }
 

@@ -25,7 +25,8 @@ use yii\widgets\Pjax;
             </div>
             <div class="modal-body">
                 <p>
-                    Доступно: <b><?= $planner->getAvailableAmount() ?> грн.</b> (<?= $planner->getAvailableAmountPercent() ?>%)
+                    <span class="d-block">Доступно: <b><?= $category->getLeftAmount() ?> грн.</b></span>
+                    <span class="d-block">Використано: <b><?= $category->used_amount ?> грн.</b></span>
                 </p>
 
                 <?php

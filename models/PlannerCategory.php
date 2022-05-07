@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%planner_category}}".
@@ -16,7 +16,7 @@ use Yii;
  *
  * @property UserPlanner $planner
  */
-class PlannerCategory extends \yii\db\ActiveRecord
+class PlannerCategory extends ActiveRecord
 {
     const COLORS = [
         '#ff9f40',
@@ -77,5 +77,10 @@ class PlannerCategory extends \yii\db\ActiveRecord
     public function getLeftAmount(): float
     {
         return $this->amount - $this->used_amount;
+    }
+
+    public function getUsedPlannerPercent(): float
+    {
+        return ($this->amount * 100) / $this->planner->amount;
     }
 }

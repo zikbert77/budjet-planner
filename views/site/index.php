@@ -22,27 +22,35 @@ $this->title = 'My Yii Application';
             <span class="balance small text-muted">$799</span>
         </div>
 
-        <div class="add-new-wallet">
+        <div class="add-new-wallet custom-link">
             + Додати гаманець
         </div>
     </div>
 </div>
 <div class="container">
     <div class="row">
-        <div class="create-new-planner">
-            + Create new Planner
+        <div class="col">
+            <div class="create-new-planner custom-link">
+                + Створити новий планер
+            </div>
         </div>
-        <div class="planners-row">
-            <?php foreach ($planners as $planner): ?>
-                <a href="<?= \yii\helpers\Url::toRoute(['/planner', 'id' => $planner->id]) ?>">
+        <div class="clear"></div>
+        <?php foreach ($planners as $planner): ?>
+            <div class="col col-3 planner-col">
+                <a href="<?= Url::toRoute(['/planner', 'id' => $planner->id]) ?>">
                     <div class="planner">
-                        <div class="title">
-                            <?= $planner->title ?>
-                        </div>
+                        <span class="d-block"><b><?= $planner->title ?></b></span><br>
+                        <span class="small d-inline-block">Бюджет: <?= $planner->amount ?>₴</span>
+                        <span class="small d-inline-block">
+                            Використано: <?= $planner->used_amount ?>₴ (<?= 100 - $planner->getAvailableAmountPercent() ?>%)
+                        </span>
+                        <br>
+                        <br>
+                        <span class="date text-muted">Дата створення: <?= $planner->created_at ?></span>
                     </div>
                 </a>
-            <?php endforeach; ?>
-        </div>
+            </div>
+        <?php endforeach; ?>
     </div>
 </div>
 
