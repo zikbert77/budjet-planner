@@ -33,7 +33,8 @@ class PlannerCategoryExpenses extends ActiveRecord
     {
         return [
             [['category_id'], 'required'],
-            [['category_id', 'amount'], 'integer'],
+            [['category_id'], 'integer'],
+            ['amount', 'double'],
             [['created_at', 'description'], 'safe'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => PlannerCategory::class, 'targetAttribute' => ['category_id' => 'id']],
         ];

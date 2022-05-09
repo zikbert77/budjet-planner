@@ -37,6 +37,7 @@ class PlannerCategoryExpenseForm extends Model
         $expense->description = $this->description;
         $expense->category_id = $this->category->id;
         if (!$expense->validate()) {
+            $this->addError('amount', $expense->getFirstError('amount'));
             return false;
         }
 

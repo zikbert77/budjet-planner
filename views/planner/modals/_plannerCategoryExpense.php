@@ -41,7 +41,7 @@ use yii\widgets\Pjax;
 
                 <?= $form
                     ->field($model, 'amount')
-                    ->textInput(['id' => 'amount', 'autofocus' => true, 'type' => 'number'])
+                    ->textInput(['id' => 'amount', 'autofocus' => true, 'type' => 'number', 'step' => '0.01'])
                     ->label('Сума')
                 ?>
 
