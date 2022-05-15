@@ -11,22 +11,9 @@ use yii\helpers\Url;
 $this->title = 'My Yii Application';
 ?>
 
-<div class="container">
-    <div class="wallets">
-        <div class="wallet">
-            <span class="title">Mono - USD</span><br>
-            <span class="balance small text-muted">$1000</span>
-        </div>
-        <div class="wallet">
-            <span class="title">PayPal</span><br>
-            <span class="balance small text-muted">$799</span>
-        </div>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
-        <div class="add-new-wallet custom-link">
-            + Додати гаманець
-        </div>
-    </div>
-</div>
+<?= $this->render('//layouts/_wallet') ?>
 <div class="container">
     <div class="row">
         <div class="col">
@@ -55,9 +42,6 @@ $this->title = 'My Yii Application';
 </div>
 
 <div id="newPlannerModalWrapper"></div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script></body>
-
 <script>
     $(document).ready(function () {
         $('.create-new-planner').click(function () {
@@ -73,3 +57,4 @@ $this->title = 'My Yii Application';
         });
     })
 </script>
+</body>

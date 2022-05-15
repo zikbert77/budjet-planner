@@ -36,6 +36,11 @@ class User extends ActiveRecord implements IdentityInterface
         return '{{%user}}';
     }
 
+    public function getWallets(): ActiveQuery
+    {
+        return $this->hasMany(Wallet::class, ['user_id' => 'id']);
+    }
+
     public function getPlanners()
     {
         return $this->hasMany(UserPlanner::class, ['user_id' => 'id']);

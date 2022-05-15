@@ -3,31 +3,18 @@
 /**
  * @var yii\web\View $this
  * @var UserPlanner $planner
+ * @var View $this
  */
 
 use app\models\UserPlanner;
 use yii\helpers\Url;
+use yii\web\View;
 
 
 $this->title = 'Planner';
 ?>
 
-<div class="container">
-    <div class="wallets">
-        <div class="wallet">
-            <span class="title">Mono - USD</span><br>
-            <span class="balance small text-muted">$1000</span>
-        </div>
-        <div class="wallet">
-            <span class="title">PayPal</span><br>
-            <span class="balance small text-muted">$799</span>
-        </div>
-
-        <div class="add-new-wallet">
-            + Додати гаманець
-        </div>
-    </div>
-</div>
+<?= $this->render('//layouts/_wallet') ?>
 <div class="container">
     <div class="row">
        <div class="col col-5">

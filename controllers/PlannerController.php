@@ -5,13 +5,27 @@ namespace app\controllers;
 use app\models\forms\PlannerCategoryExpenseForm;
 use app\models\forms\PlannerCategoryForm;
 use app\models\forms\PlannerForm;
+use app\models\forms\WalletForm;
 use app\models\PlannerCategory;
+use app\models\User;
 use app\models\UserPlanner;
 use Yii;
 use yii\web\Controller;
 
 class PlannerController extends Controller
 {
+    public $userModel;
+
+    /**
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function beforeAction($action): bool
+    {
+        $this->userModel = User::findOne(Yii::$app->getUser()->id);
+
+        return parent::beforeAction($action);
+    }
+
     public function actionIndex($id)
     {
         return $this->render('index', [
@@ -21,7 +35,18 @@ class PlannerController extends Controller
 
     public function actionWalletModal()
     {
-        return $this->renderAjax('modals/_wallet');
+        $model = new WalletForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if (!$model->save()) {
+                return $this->asJson(['status' => false]);
+            }
+
+            return $this->asJson(['status' => true]);
+        }
+
+        return $this->renderAjax('modals/_wallet', [
+            'model' => $model
+        ]);
     }
 
     public function actionNewPlannerModal()
