@@ -11,6 +11,7 @@ use app\models\User;
 use app\models\UserPlanner;
 use Yii;
 use yii\web\Controller;
+use yii\web\Response;
 
 class PlannerController extends Controller
 {
@@ -31,6 +32,13 @@ class PlannerController extends Controller
         return $this->render('index', [
             'planner' => UserPlanner::findOne($id),
         ]);
+    }
+
+    public function actionWalletList()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        return $this->renderAjax('//layouts/_wallet');
     }
 
     public function actionWalletModal()

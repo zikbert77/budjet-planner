@@ -22,7 +22,6 @@ use yii\widgets\Pjax;
                 <?php
                 $form = ActiveForm::begin([
                     'id' => 'form-create-wallet',
-                    'options' => ['data' => ['pjax' => false]],
                 ]);
                 ?>
 
@@ -52,20 +51,29 @@ use yii\widgets\Pjax;
 
 <script>
     $(document).ready(function () {
-        $('#form-create-wallet').submit(function (e) {
+        $('#form-create-wallet').on('beforeSubmit', function (e) {
             e.preventDefault();
-            let data = $(this).serialize();
+            e.stopImmediatePropagation();
+            let data = $(this).serializeArray();
             $.ajax({
                 url: '<?= Url::toRoute(['/planner/wallet-modal'])?>',
                 data: data,
                 type: 'POST',
-                success: function (response) {
-                    if (response.status) {
-                        //show ok
-                    }
+                dataType: 'json'
+            })
+            .done(function(response) {
+                console.log(response)
+                console.log(response.status)
+                if (response.status) {
+                    console.log(11)
+                    refreshWalletList();
+                }
 
-                    $('.btn-close').click();
-                },
+                $('.btn-close').click();
+            })
+            .fail(function() {
+                console.log("error");
+                $('.btn-close').click();
             });
 
             return false;

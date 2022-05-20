@@ -14,7 +14,6 @@ use yii\web\View;
 $this->title = 'Planner';
 ?>
 
-<?= $this->render('//layouts/_wallet') ?>
 <div class="container">
     <div class="row">
        <div class="col col-5">
@@ -117,9 +116,7 @@ $this->title = 'Planner';
 
 <div id="modalWrapper"></div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script></body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
     $(document).ready(function () {
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
